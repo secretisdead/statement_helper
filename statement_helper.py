@@ -116,6 +116,22 @@ def string_equal_filter(filter, filter_field, column):
 			conditions.append(False)
 	return conditions
 
+def string_unequal_filter(filter, filter_field, column):
+	conditions = []
+	if filter_field in filter:
+		if list is not type(filter[filter_field]):
+			filter[filter_field] = [filter[filter_field]]
+		block_conditions = []
+		for string_equal in filter[filter_field]:
+			block_conditions.append(
+				column != str(string_equal)
+			)
+		if block_conditions:
+			conditions.append(or_(*block_conditions))
+		else:
+			conditions.append(False)
+	return conditions
+
 def string_like_filter(filter, filter_field, column):
 	conditions = []
 	if filter_field in filter:
