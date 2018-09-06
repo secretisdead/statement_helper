@@ -148,11 +148,7 @@ def string_like_filter(filter, filter_field, column):
 			conditions.append(False)
 	return conditions
 
-def bitwise_filter(
-		filter,
-		filter_field,
-		column,
-	):
+def bitwise_filter(filter, filter_field, column):
 	conditions = []
 	if 'with_' + filter_field in filter:
 		bits = filter['with_' + filter_field]
