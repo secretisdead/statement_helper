@@ -1,3 +1,5 @@
+from ipaddress import ip_address
+
 from sqlalchemy.sql import or_, and_
 
 from base64_url import base64_url_decode
@@ -155,4 +157,46 @@ def bitwise_filter(
 		conditions.append(
 			and_(column.op('&')(bits) != bits).self_group()
 		)
+	return conditions
+
+def remote_origin_filter(filter, filter_field, column):
+	conditions = []
+	if 'with_' + filter_field in filter:
+		if list is not type(filter['with_' + filter_field]):
+			filter['with_' + filter_field] = [
+				filter['with_' + filter_field],
+			]
+		block_conditions = []
+		for remote_origin in filter['with_' + filter_field]:
+			try:
+				remote_origin = ip_address(str(remote_origin))
+			except:
+				pass
+			else:
+				block_conditions.append(
+					column == remote_origin.packed
+				)
+		if block_conditions:
+			conditions.append(or_(*block_conditions))
+		else:
+			conditions.append(False)
+	if 'without_' + filter_field in filter:
+		if list is not type(filter['without_' + filter_field]):
+			filter['without_' + filter_field] = [
+				filter['without_' + filter_field],
+			]
+		block_conditions = []
+		for remote_origin in filter['without_' + filter_field]:
+			try:
+				remote_origin = ip_address(str(remote_origin))
+			except:
+				pass
+			else:
+				block_conditions.append(
+					column != remote_origin.packed
+				)
+		if block_conditions:
+			conditions.append(or_(*block_conditions))
+		else:
+			conditions.append(False)
 	return conditions
