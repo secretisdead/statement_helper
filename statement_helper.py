@@ -208,7 +208,7 @@ def remote_origin_filter(filter, filter_field, column):
 					column != remote_origin.packed
 				)
 		if block_conditions:
-			conditions.append(or_(*block_conditions))
+			conditions.append(and_(*block_conditions))
 		else:
 			conditions.append(False)
 	return conditions
