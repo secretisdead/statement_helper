@@ -65,7 +65,7 @@ def id_filter(filter, filter_field, column):
 			conditions.append(False)
 	return conditions
 
-def int_comparison_filter(
+def int_cutoff_filter(
 		filter,
 		filter_field_less_than,
 		filter_field_greater_than,
@@ -82,23 +82,13 @@ def int_comparison_filter(
 		)
 	return conditions
 
-def time_filter(filter, filter_field, column):
-	return int_comparison_filter(
+def time_cutoff_filter(filter, filter_field, column):
+	return int_cutoff_filter(
 		filter,
 		filter_field + '_before',
 		filter_field + '_after',
 		column,
 	)
-	conditions = []
-	if (filter_field + '_after') in filter:
-		conditions.append(
-			column > int(filter[filter_field + '_after'])
-		)
-	if filter_field + '_before' in filter:
-		conditions.append(
-			column < int(filter[filter_field + '_before'])
-		)
-	return conditions
 
 def string_equal_filter(filter, filter_field, column):
 	conditions = []
