@@ -106,7 +106,7 @@ def string_equal_filter(filter, filter_field, column):
 			conditions.append(False)
 	return conditions
 
-def string_unequal_filter(filter, filter_field, column):
+def string_not_equal_filter(filter, filter_field, column):
 	conditions = []
 	if filter_field in filter:
 		if list is not type(filter[filter_field]):
