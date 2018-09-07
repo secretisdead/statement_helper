@@ -183,7 +183,7 @@ def remote_origin_filter(filter, filter_field, column):
 			try:
 				remote_origin = ip_address(str(remote_origin))
 			except:
-				pass
+				return[False]
 			else:
 				block_conditions.append(
 					column == remote_origin.packed
