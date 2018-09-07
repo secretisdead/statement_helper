@@ -72,14 +72,24 @@ def int_cutoff_filter(
 		column,
 	):
 	conditions = []
-	if (filter_field_less_than) in filter:
-		conditions.append(
-			column < int(filter[filter_field_less_than])
-		)
+	if filter_field_less_than in filter:
+		try:
+			less_than = int(filter[filter_field_less_than])
+		except:
+			conditions.append(False)
+		else:
+			conditions.append(
+				column < less_than
+			)
 	if filter_field_greater_than in filter:
-		conditions.append(
-			column > int(filter[filter_field_greater_than])
-		)
+		try:
+			greater_than = int(filter[filter_field_greater_than])
+		except:
+			conditions.append(False)
+		else:
+			conditions.append(
+				column > greater_than
+			)
 	return conditions
 
 def time_cutoff_filter(filter, filter_field, column):
