@@ -127,7 +127,7 @@ def string_not_equal_filter(filter, filter_field, column):
 				column != str(string_equal)
 			)
 		if block_conditions:
-			conditions.append(or_(*block_conditions))
+			conditions.append(and_(*block_conditions))
 		else:
 			conditions.append(False)
 	return conditions
