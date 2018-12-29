@@ -65,6 +65,22 @@ def id_filter(filter, filter_field, column):
 			conditions.append(False)
 	return conditions
 
+def int_equal_filter(filter, filter_field, column):
+	conditions = []
+	if filter_field in filter:
+		if list is not type(filter[filter_field]):
+			filter[filter_field] = [filter[filter_field]]
+		block_conditions = []
+		for int_equal in filter[filter_field]:
+			block_conditions.append(
+				column == int(int_equal)
+			)
+		if block_conditions:
+			conditions.append(or_(*block_conditions))
+		else:
+			conditions.append(False)
+	return conditions
+
 def int_cutoff_filter(
 		filter,
 		filter_field_less_than,
